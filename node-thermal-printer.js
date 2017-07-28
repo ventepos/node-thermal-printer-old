@@ -577,13 +577,14 @@ NodeThermalPrinter.prototype.code128 = function(data, settings) {
 // ----------------------------------------------------- PRINT IMAGE EPSON -----------------------------------------------------
 // https://reference.epson-biz.com/modules/ref_escpos/index.php?content_id=88
 NodeThermalPrinter.prototype._printImageEpson = function(image, callback){
+  var printer = this;
   fs.createReadStream(image).pipe(new PNG({
     filterType: 4
   })).on('parsed', function() {
-    this._printImageBufferEpson(this.width, this.height, this.data, function(done){
+    printer._printImageBufferEpson(this.width, this.height, this.data, function(done){
       callback(done);
-    }.bind(this));
-  }.bind(this));
+    });
+  });
 };
 
 
@@ -648,13 +649,14 @@ NodeThermalPrinter.prototype._printImageBufferEpson = function(width, height, da
 
 // ----------------------------------------------------- PRINT IMAGE STAR -----------------------------------------------------
 NodeThermalPrinter.prototype._printImageStar = function(image, callback){
+  var printer = this;
   fs.createReadStream(image).pipe(new PNG({
     filterType: 4
   })).on('parsed', function() {
-    this._printImageBufferStar(this.width, this.height, this.data, function(done){
+    printer._printImageBufferStar(this.width, this.height, this.data, function(done){
       callback(done);
-    }.bind(this));
-  }.bind(this));
+    });
+  });
 };
 
 
