@@ -35,6 +35,9 @@ NodeThermalPrinter.prototype.execute = function(cb){
       host : this.printerConfig.ip,
       port : this.printerConfig.port
     });
+    printer.once('close', function(hadError) {
+      if (cb) cb(hadError);
+    })
     printer.write(this.buffer);
     printer.end();
 
@@ -869,6 +872,9 @@ NodeThermalPrinter.prototype.raw = function(text,cb) {
       port: this.printerConfig.port
     });
     printer.write(text);
+    printer.once('close', function(hadError) {
+      if (cb) cb(hadError);
+    });
     printer.end();
 
   } else {
